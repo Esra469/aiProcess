@@ -115,6 +115,93 @@ ax.legend(loc='lower right',frameon=True)#legendlerin gorunurlugu // labelrin go
 ax.set(xlabel='Percentangle of Races',ylabel="Sates",title="Percentangle of state's population According to races")
 
 
+#Normalizasyon
+#higth school graduation rate vs Poverty rate of each state 
+#2 datayı da 0 ve 1  ararsına çektik
+sorted_data['area_poverty_ratio']=sorted_data['area_poverty_ratio']/max(sorted_data['area_poverty_ratio'])
+sorted_data2['area_highschool_ratio']=sorted_data2['area_highschool_ratio']/max(sorted_data2['area_highschool_ratio'])
+data=pd.concat([sorted_data,sorted_data2['area_highschool_ratio']],axis=1)
+data.sort_values('area_poverty_ratio',inplace=True)
+
+#visualize
+f,ax1=plt.subplot(figsize=(10,10))
+sns.pointplot(x='area_list',y='area_pover_ratio',data=data,color='lime',alpha=0.8)
+sns.pointplot(x='area_list',y='area_highschool_ratio',data=data,color='red',alpha=0.8)
+plt.text(40,0.6,'high school graduate ratio ',color='red',fontsize=17,style='italic')
+plt.text(40,0.55,'poverty ratio',color='lime',fontsize=18,style='italic')
+plt.xlabel('States',fontsize=15,color='blue')
+plt.ylabel('Values',fontsize=15,color='blue')
+plt.title('hight school graduate vs poverty rate',fountsize=20,color='blue')
+plt.grid()
+
+#joint plot
+#pearsonr->2 tane koşul arasındaki korelasyonu gösterir 1 ise pozitif correlation -1 ise negatif correlation 0 ise correlation yok 
+#visualization of high school garduation rate vs poverty rate of each state with different style of seaborn code
+g=sns.jointplot(data.area_poverty_ratio,data.area_highschool_ratio,kind="kde",size=7)
+plt.savefig('graph.png')#resimn kaggle de görünmesi için yazılabilr
+plt.show()
+
+g=sns.jointplot("area_poverty_ratio","area_highchool_ratio",data=data,size=5,color='r')#data=data demek yukarıdaki ile aynı işlevi sağlayacak demek aslında
+
+#Race rates according in kill data(öldürülenlerin ırklara gore dagılımı)
+kill.race.head(10) #
+kill.race.value_counts()#hangi ırktan kaç tane olduğunu verir
+kill.race.dropna(inplace=True)#ırk datasında boş deger varsa drop et yani datadan çıkar(ve bunu dataya kaydet)
+labels=kill.race.value_counts().index
+color=["grey","green","blue","pink","yellow","black"]#6 ırk çeşidi oldugu için 6 renk var
+explode=[0,0,0,0,0,0]
+sizes=kill.race.value_counts().values #ırkların degerlerinni aldı sizesere atadı#bu değerleirn hepsini bir diziye atadı->array([1201,  618,  423,   39,   31,   28], dtype=int64)
+#visual
+plt.figure(figsize=(7,7))
+plt.pie(sizes,explode=explode,labels=labels,colors=color,autopct='%1.1f%%')#autopct ondaık yazdıktan sonradki virgülden sonraki deger
+plt.title("killed people according to races ",color="blue",fontsize=15)
+
+#Visualization of high school graduation rate vs poverty rate of each state with differenet style of seaborn code
+#show the result of a linear regression within each dataset(lmplot a ait bir durum)
+#LM plot
+sns.lmplot(x="area_list",y="area_hightschool_ratio",data=data)
+plt.show()
+
+#Visualization of high school graduation rate vs poverty rate of each state with differenet style of seaborn code
+#kde Plot
+sns.kdeplot(data.area_poverty_ratio,data.area_highchool_ratio,shade=True,cut=5)#shade oluşan yuvarlakların dolulugu cut->oluşan gorselin buyuklugu
+plt.show()
+
+#Violin Plot
+#show each dsitribution with both violins and points
+#use cubehelix to get  a custom sequential palette
+pal=sns.cubehelix_palette(2,rot=-.5,dark=.3)
+sns.violinplot(data=data,palette=pal,inner="points")#gorsel ustundeki noktalar inner da gosterilir
+plt.show()#buradaki gorselde şişman olan kısmın daha çok istenen veri odaklı oldugu anlasılır
+
+
+#Visualization of high school graduation rate vs poverty rate of each state with differenet style of seaborn code
+#heatmap
+#correlation map
+#corr corelation negatif olursa ters ilişki corelation pozitif olursa doğru bir ilişki durumu olur
+f,ax=plt.subplot(figsize=(10,10))
+sns.heatmap(data.corr(), annot=True,linewidths=.5,fmt='1.f',ax=ax)
+plt.show()
+
+
+#Box Plot
+#manner of dead(olum sekli) 
+#gender
+#age
+#plot the orbital period with horizonal boxes
+sns.boxplot(x="gender",y="age",hue="manner_of_death",data=kill,palette="PRGn")#hue=manner_of_death içindeki classları ayrı uniqleri almak gibi
+plt.title("manner of dead",color="blue")
+plt.show()
+
+
+#swarm plot
+#manner of dead(olum sekli)
+#gender
+#age
+sns.swarmplot(x="gender",y="age",hue="manner_of_death",data=kill)
+
+
+
 
 
 
