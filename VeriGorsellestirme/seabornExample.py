@@ -194,11 +194,32 @@ plt.title("manner of dead",color="blue")
 plt.show()
 
 
-#swarm plot
+#swarm plot(fazla datada sorun cıkarabilir)
 #manner of dead(olum sekli)
 #gender
 #age
 sns.swarmplot(x="gender",y="age",hue="manner_of_death",data=kill)
+plt.show()
+
+#pair plot
+sns.pairplot(data)#histogram ve line şekilnde bir plot çizdiriyor
+plt.show()
+
+#Count plot
+#manner of death
+kill.manner_of_death.value_counts()#manner of death içinde hangi çeşitten kaç tane var bilgisi
+sns.countplot(kill.gender)#kill içindeki genderleridne hangiisnden kaç tane oldugunu analizler
+sns.countplot(kill.manner_of_death)
+plt.title("gender",color="blue",fontsize=10)
+
+#age of killed people
+above25=["above25" if i>25 else 'below25' for i in killed]
+df=pd.DataFrame({'age':above25})
+sns.countplot(x=df.age)
+plt.ylabel('number of killed people')
+plt.title("age of killed people",color="blue",fontsize=15)
+
+
 
 
 
