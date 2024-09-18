@@ -143,7 +143,12 @@ lr.predict([[130]])#fit ettiğimiz degere gore hangi sonucu vereceğini buluyoru
 from sklearn.preprocessing import PolynomialFeatures
 polynomial_regression=PolynomialFeatures(degree=2)
 
-x_polynomial=polynomial_regression.fit(x)
+x_polynomial=polynomial_regression.fit_transform(x)#burada benim x imi karesel bir biçimde donuştur
+
+
+
+
+
 
 
 
