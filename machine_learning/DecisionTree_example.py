@@ -14,7 +14,7 @@ x1 ve x2 featuresi y yi veriyor
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-df=pd.read_csv("",sep=";",header=None)
+df=pd.read_csv("random_forest_regression_dataset.csv",sep=";",header=None)
 x=df.iloc[:,0].values.reshape(-1,1)
 y=df.iloc[:,1].values.reshape(-1,1)
 
@@ -71,6 +71,44 @@ plt.show()
 
 
 #%% Evaluation regression model ->çıkan sonuçların doğruluğu test edilir
+
+"""
+residual=y-y_head
+square residual=(resudial)^2->her samplenin line arasındaki uzaklık karesi  (SSR)
+
+sum square residual=sum((y-y_head)^2)
+sonra bunların ortalamasını buluyoruz-> y_avg  ->sum square total=sum((y-y_head)^2) (SST)
+
+R^2=1-(SSR/SST)->bunun sonucu bize bir sayısal deger döndurur->R^2 degeri 1 e ne kadar yakında gidilen yol o kadar doğrudur demek ->R square (R^2 olarak belirtilebilr)
+
+"""
+#R square with Random forest
+x=data.iloc[:,0].values.reshape(-1,1)
+y=data.iloc[:,1].values.reshape(-1,1)
+from sklearn.ensemble import RandomForestRegressor
+rf=RandomForestRegressor(n_estimators=100,random_state=42)
+
+rf.fit(x,y)
+y_head=rf.predict(x)#bu şekilde x değerlerni predcit ettik ,yaptığımız predict değerlerinin doğruluğunu kontorl edelim
+
+from sklearn.metrics import r2_score#R^2 için analizyeceğimiz için bu kütüphaneyi kullanıyoruz
+print("r_score",r2_score(y, y_head))#->Buarda belli bir doğruluk oranı bulacağız 1 e yakın olma durumuna gore doğruluk payı o kadar fazla demek
+
+
+#%%
+#R square with Linear regression
+from sklearn.linear_model import LinearRegression
+linear_reg=LinearRegression()
+x=df.deneyim.values.reshape(-1,1)
+y=df.maas.values.reshape(-1,1)
+
+linear_reg.fit(x,y)
+y_head=linear_reg.predict(x)#maas predict edildi
+plt.plot(x,y_head,color="red")
+
+from sklearn.metrics import r2_score
+print("r_square score", r2_score(y, y_head))
+
 
 
 
