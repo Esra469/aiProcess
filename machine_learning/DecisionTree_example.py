@@ -19,6 +19,7 @@ x=df.iloc[:,0].values.reshape(-1,1)
 y=df.iloc[:,1].values.reshape(-1,1)
 
 #%%decision tree regression
+#2 Boyutlu dataset kullanarak tasarladık
 from sklearn.tree import DecisionTreeRegressor
 tree_reg=DecisionTreeRegressor() #random sate=0
 tree_reg.fit(x,y)#ağaç modelini oluşturduk demek
@@ -33,6 +34,63 @@ plt.plot(x,y_head,color="green")
 plt.xlabel("tribun level")
 plt.ylabel("ucret")
 plt.show()
+
+
+
+#%% Random Forest (ağaçların toplamı)
+"""
+ensemle  learning üyesi
+ensemle learning
+
+data->{n sayısa sample}-sub_data->tree1,tree2....->average->result
+
+
+
+"""
+
+data=pd.read_csv("random_forest_regression_dataset.csv",sep=";",header=None)#header none yaptık 1 ve 100 başlarda gözükmesin diye
+
+x=data.iloc[:,0].values.reshape(-1,1)#Burada x eksenini seçtik iloc ile tüm satırları seçtik tüm satırlardan 1. sütünü aldık ve numpy için valeus e döndürdük
+y=data.iloc[:,1].values.reshape(-1,1)
+
+from sklearn.ensemble import RandomForestRegressor
+rf=RandomForestRegressor(n_estimators=100,random_state=42)#100 tane ağaç kullanılacak şekilde ayarlandı n_estimators ile random_state->bir daha run edildiğinde eskisi ile aynı sonucu verecek şekilde ayarlıyor
+rf.fit(x,y)#x ve y ye göre bir line yani fit değeri aldık
+rf.predict([[7.5]])#7.5 seviyesinde fiyatın ne seviyesinde olduunu göreceğiz
+
+x_=np.arange(min(x),max(x),0.01).reshape(-1,1)#Burada x değerlerini aldım
+y_head=rf.predict(x_)#aladığım x değerlerini y_head e atadım predict ettim
+
+#visualize
+plt.scatter(x, y,color="red")
+plt.plot(x_,y_head,color="green")
+plt.xlabel("tribun level")
+plt.ylabel("ucret")
+plt.show()
+
+
+
+#%% Evaluation regression model ->çıkan sonuçların doğruluğu test edilir
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
