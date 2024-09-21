@@ -131,7 +131,7 @@ lr.fit(x3,y3)#olan samplelere en uygun line fit ediliyor
 #predict
 y_head=lr.predict(x3)
 
-plt.plot(x3,y_head,color="red")
+plt.plot(x3,y_head,color="red",label="linear")
 plt.show()
 
 lr.predict([[130]])#fit ettiğimiz degere gore hangi sonucu vereceğini buluyoruz
@@ -141,9 +141,21 @@ lr.predict([[130]])#fit ettiğimiz degere gore hangi sonucu vereceğini buluyoru
 #%%polynomial Linear regression ->y=b0+b1*x+b2*x^2+...+bn*x^n
 
 from sklearn.preprocessing import PolynomialFeatures
-polynomial_regression=PolynomialFeatures(degree=2)
+polynomial_regression=PolynomialFeatures(degree=2)#Burada degree artırdıkça polinom bir fonksiyon için doğruluk eğerisi de artacak 
 
-x_polynomial=polynomial_regression.fit_transform(x)#burada benim x imi karesel bir biçimde donuştur
+x_polynomial=polynomial_regression.fit_transform(x3)#burada benim x imi karesel bir biçimde donuştur
+
+#%% fit
+linear_regression2=LinearRegression()
+linear_regression2.fit(x_polynomial,y)
+
+#visualize
+linear_regression2.predict(x_polynomial)#x_polynamial kullanarak predict ediyoruz
+
+plt.plot(x,y_head,color="green",label="poly")
+plt.legend()
+plt.show()
+
 
 
 
