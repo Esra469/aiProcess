@@ -135,7 +135,7 @@ def predict(w,b,x_test):
     for i in range(z.shape[1]):
         if z[0,i]<=0.5:
             y_prediction[0,i]=0
-        else:
+        else:   
             y_prediction[0,i]=1
     return y_prediction
 
@@ -157,8 +157,9 @@ logistic_regression(x_train, y_train, x_test, y_test, learning_rate=1, num_itera
 
 from sklearn.linear_model import LogisticRegression
 lr=LogisticRegression()
-lr.fit(x_train.T,y_train.T)
+lr.fit(x_train.T,y_train.T)#->Burada değerlerimizi fit ediyoruz yani prediction değerlerini buluyoruz
 print("test accuracy {}".format(lr.score(x_test.T,y_test.T)))
+
 
 
 
