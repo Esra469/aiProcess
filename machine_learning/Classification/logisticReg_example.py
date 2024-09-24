@@ -171,3 +171,4 @@ print("test accuracy {}".format(lr.score(x_test.T,y_test.T)))
 
 
 
+
