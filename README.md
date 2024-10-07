@@ -5,3 +5,5 @@ in this lesson, we will learn the necessary steps for artificial intelligence
 
 ![killed](https://github.com/user-attachments/assets/1b4c2fd7-4d9b-4337-b821-386704d14daa)
 
+
+<h3>Github da büyük dosyaları saklamak ve okumak için lfs kullandım</h3>
